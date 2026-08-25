@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102d73">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Vianey & Luis · 09.01.2027</title>
+  <meta name="description" content="Sitio oficial de la boda de Vianey & Luis. Confirma tu asistencia, consulta la ubicación y comparte tus fotos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Pantalla de bienvenida: brillo + novios bailando -->
+  <div class="welcome-screen" id="welcomeScreen" aria-label="Bienvenida a la invitación de boda">
+    <div class="welcome-sparkles" aria-hidden="true">
+      <i>✦</i><i>✧</i><i>·</i><i>✦</i><i>·</i><i>✧</i><i>✦</i><i>·</i>
+    </div>
+    <div class="welcome-content">
+      <p class="welcome-kicker">SAVE THE DATE</p>
+      <div class="dancing-couple" aria-hidden="true">
+        <svg viewBox="0 0 320 260" role="presentation">
+          <defs>
+            <filter id="softGlow"><feGaussianBlur stdDeviation="2.2"/></filter>
+          </defs>
+          <g class="couple-glow" opacity=".22" filter="url(#softGlow)">
+            <circle cx="160" cy="120" r="82" fill="#d8a735"/>
+          </g>
+          <!-- novio -->
+          <g class="groom">
+            <circle cx="119" cy="65" r="22"/>
+            <path d="M101 61 Q119 37 137 59 Q130 51 120 52 Q109 52 101 61Z"/>
+            <path d="M105 90 L91 168 L116 207 L138 168 L137 92 Z"/>
+            <path d="M102 101 L72 137 L88 147 L110 124"/>
+            <path d="M136 102 L164 116 L157 128 L130 118"/>
+            <path d="M116 207 L105 245 L118 245 L128 210"/>
+            <path d="M138 168 L154 211 L143 216 L128 179"/>
+          </g>
+          <!-- novia -->
+          <g class="bride">
+            <circle cx="190" cy="72" r="21"/>
+            <path d="M170 70 Q189 39 208 67 Q202 52 187 54 Q177 55 170 70Z"/>
+            <path class="hair" d="M171 72 Q158 89 171 116 Q183 129 199 116 Q213 101 208 75"/>
+            <path d="M184 94 L170 145 Q164 174 146 213 L222 213 Q204 178 202 145 L194 94 Z"/>
+            <path d="M182 99 L157 121 L165 130 L187 113"/>
+            <path d="M199 101 L164 116"/>
+            <path d="M200 107 Q217 127 235 142"/>
+          </g>
+          <!-- manos tomadas -->
+          <path class="joined-hands" d="M157 127 Q172 118 185 122"/>
+          <!-- vestidos / detalles -->
+          <path class="dress-detail" d="M158 190 Q185 202 218 190"/>
+          <path class="shoe" d="M102 245 Q111 239 121 244 L122 250 L98 250 Z"/>
+          <path class="shoe" d="M142 216 Q151 211 159 217 L158 223 L139 223 Z"/>
+        </svg>
+      </div>
+      <h2>Janette Vianey <span>&</span> Luis Alberto</h2>
+      <p class="welcome-date">09 · 01 · 2027</p>
+      <button class="welcome-enter" id="welcomeEnter" type="button">Abrir invitación <span>✦</span></button>
+      <p class="welcome-hint">Una historia de amor comienza aquí</p>
+    </div>
+  </div>
+  <div class="grain"></div>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="petals" aria-hidden="true">
+    <span>✦</span><span>·</span><span>✧</span><span>·</span><span>✦</span><span>·</span>
+  </div>
+
+  <header class="nav">
+    <a class="brand" href="#inicio">V<span>&</span>L</a>
+    <nav>
+      <a href="#evento">Evento</a>
+      <a href="#registro">Registro</a>
+      <a href="#regalo">Regalo</a>
+      <a href="#fotos">Fotos</a>
+    </nav>
+    <button class="ghost-btn private-access" id="adminOpen" aria-label="Acceso privado">🔒</button>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">SAVE THE DATE · MÉRIDA, YUCATÁN</p>
+        <h1>Vianey <em>&</em> Luis</h1>
+        <p class="date">09 · 01 · 2027</p>
+        <p class="lead">Nos encantaría compartir contigo uno de los días más importantes de nuestra historia.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#registro">Confirmar asistencia</a>
+          <a class="text-btn" href="#evento">Ver detalles ↓</a>
+        </div>
+      </div>
+      <div class="hero-art reveal">
+        <div class="art-frame invitation-stage">
+          <div class="invitation-sparkles" aria-hidden="true">
+            <span>✦</span><span>✧</span><span>✦</span><span>·</span><span>✧</span><span>✦</span>
+          </div>
+          <img class="invitation-card" src="assets/invitacion.png" alt="Invitación de boda de Janette Vianey de la Cruz Meléndez y Luis Alberto Ortega Sanvicente">
+        </div>
+      </div>
+    </section>
+
+    <section class="countdown-section reveal">
+      <p class="eyebrow">FALTAN</p>
+      <div class="countdown" id="countdown">
+        <div><strong id="days">—</strong><span>días</span></div>
+        <div><strong id="hours">—</strong><span>horas</span></div>
+        <div><strong id="minutes">—</strong><span>min</span></div>
+        <div><strong id="seconds">—</strong><span>seg</span></div>
+      </div>
+    </section>
+
+    <section class="section split reveal" id="evento">
+      <div>
+        <p class="eyebrow">EL GRAN DÍA</p>
+        <h2>Casa Maya,<br><em>Mérida</em></h2>
+        <p>Te esperamos para celebrar juntos el sábado 9 de enero de 2027.</p>
+        <div class="info-list">
+          <div><span>FECHA</span><b>Sábado · 9 de enero de 2027</b></div>
+          <div><span>LUGAR</span><b>Casa Maya · Centro, Mérida</b></div>
+        </div>
+        <a class="primary-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Casa%20Maya%2C%20Calle%2062%20492%2C%20Centro%2C%2097000%20M%C3%A9rida%2C%20Yucat%C3%A1n%2C%20M%C3%A9xico">Abrir ubicación ↗</a>
+      </div>
+      <div class="location-card">
+        <div class="map-pin">⌖</div>
+        <p>CASA MAYA</p>
+        <h3>C. 62 492, Centro</h3>
+        <span>Mérida, Yucatán</span>
+        <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Casa%20Maya%2C%20Calle%2062%20492%2C%20Centro%2C%2097000%20M%C3%A9rida%2C%20Yucat%C3%A1n%2C%20M%C3%A9xico">Cómo llegar</a>
+      </div>
+    </section>
+
+    <section class="section rsvp reveal" id="registro">
+      <div class="section-head">
+        <p class="eyebrow">REGISTRO</p>
+        <h2>¿Nos acompañas?</h2>
+        <p>Confirma tu asistencia para ayudarnos a preparar todo para ti.</p>
+      </div>
+      <form id="rsvpForm" class="form-card">
+        <label>Nombre completo<input required name="name" placeholder="Tu nombre"></label>
+        <label>Correo o WhatsApp<input required name="contact" placeholder="Para enviarte la confirmación"></label>
+        <label>¿Asistirás?
+          <select name="status" required>
+            <option value="">Selecciona</option>
+            <option value="confirmed">Sí, ahí estaré ✨</option>
+            <option value="pending">Aún no lo sé</option>
+            <option value="declined">No podré asistir</option>
+          </select>
+        </label>
+        <label>Número de invitados (incluyéndote)<input type="number" min="1" max="10" name="guests" value="1"></label>
+        <label class="full">Mensaje para los novios<textarea name="message" placeholder="Opcional"></textarea></label>
+        <button class="primary-btn full" type="submit">Enviar confirmación</button>
+        <p class="form-note">Tu confirmación se guardará de forma segura para que los novios puedan verla.</p>
+      </form>
+      <div id="rsvpSuccess" class="success-card hidden"></div>
+    </section>
+
+    <section class="section travel reveal">
+      <div class="section-head">
+        <p class="eyebrow">SI VIENES DE FUERA</p>
+        <h2>Te ayudamos a llegar.</h2>
+        <p>Incluimos aquí lo esencial para que puedas organizar tu viaje con tiempo.</p>
+      </div>
+      <div class="travel-grid">
+        <article>
+          <span>01</span><h3>Registro Civil</h3>
+          <p>Calle 65 #520 por 64 y 66, Centro, Mérida, Yucatán.</p>
+          <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Calle%2065%20520%20por%2064%20y%2066%2C%20Centro%2C%2097000%20M%C3%A9rida%2C%20Yucat%C3%A1n">Ver ubicación →</a>
+        </article>
+        <article>
+          <span>02</span><h3>Casa Maya</h3>
+          <p>C. 62 #492, Centro, Mérida, Yucatán. Aquí continuaremos la celebración.</p>
+          <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Calle%2062%20492%2C%20Centro%2C%2097000%20M%C3%A9rida%2C%20Yucat%C3%A1n">Ver ubicación →</a>
+        </article>
+      </div>
+    </section>
+
+
+    <section class="section gift reveal" id="regalo">
+      <div class="section-head">
+        <p class="eyebrow">MESA DE REGALOS</p>
+        <h2>Lo importante es<br><em>tu presencia.</em></h2>
+        <p>El regalo es opcional; pero si a pesar de todo quieres tener un detalle con nosotros, aquí te dejamos estos datos.</p>
+      </div>
+      <div class="gift-card">
+        <div class="gift-icon">✦</div>
+        <div class="gift-details">
+          <div><span>BANCO</span><strong>Santander</strong></div>
+          <div><span>TITULAR</span><strong>Janette Vianey de la Cruz Meléndez</strong></div>
+          <div><span>CUENTA CLABE</span><strong class="copyable" data-copy="014910140247000485">0149 1014 0247 0004 85</strong></div>
+          <div><span>TARJETA</span><strong class="copyable" data-copy="5579083046924409">5579 0830 4692 4409</strong></div>
+        </div>
+        <button class="ghost-btn copy-all" id="copyGiftData" type="button">Copiar datos bancarios</button>
+      </div>
+      <p class="gift-note">Gracias por acompañarnos y ser parte de este día tan especial. ✨</p>
+    </section>
+
+    <section class="section photos reveal" id="fotos">
+      <div class="section-head">
+        <p class="eyebrow">RECUERDOS</p>
+        <h2>Comparte tus fotos.</h2>
+        <p>Durante la boda, todos podrán subir sus momentos para crear un álbum compartido.</p>
+      </div>
+      <div class="upload-card">
+        <div class="upload-icon">＋</div>
+        <h3>Álbum de invitados</h3>
+        <p>Conecta aquí una carpeta de Google Drive para que los invitados puedan subir sus fotos.</p>
+        <a id="driveButton" class="primary-btn" target="_blank" rel="noopener" href="https://drive.google.com/">Abrir álbum en Drive ↗</a>
+        <small>La conexión directa con Drive requiere configurar OAuth o un pequeño backend. Este paquete incluye la estructura para hacerlo.</small>
+      </div>
+    </section>
+<section class="final-cta reveal">
+      <p class="eyebrow">V & L</p>
+      <h2>Nos vemos en<br><em>Mérida.</em></h2>
+      <a class="primary-btn" href="#registro">Confirmar asistencia</a>
+    </section>
+  </main>
+
+  <footer>Vianey & Luis · 09.01.2027 · Mérida, Yucatán</footer>
+
+  <div class="modal hidden" id="adminModal">
+    <div class="modal-card">
+      <button class="close" id="adminClose">×</button>
+      <p class="eyebrow">PANEL PRIVADO</p>
+      <h2>Invitados</h2>
+      <div id="loginBox">
+        <p>Acceso de ejemplo para los novios.</p>
+        <input id="pin" type="password" placeholder="PIN">
+        <button class="primary-btn" id="loginBtn">Entrar</button>
+      </div>
+      <div id="dashboard" class="hidden">
+        <div class="stats"><div><b id="confirmedCount">0</b><span>Confirmados</span></div><div><b id="pendingCount">0</b><span>Pendientes</span></div><div><b id="declinedCount">0</b><span>No asistirán</span></div><div><b id="totalPeople">0</b><span>Personas confirmadas</span></div></div>
+        <div id="guestList" class="guest-list"></div>
+        <button class="ghost-btn" id="clearData">Borrar registros</button>
+      </div>
+    </div>
+  </div>
+
+<script src="app.js"></script>
+</body>
+</html>
