@@ -155,18 +155,3 @@ if(!prefersReduced){
     el.addEventListener('mouseleave',()=>el.style.transform='');
   });
 }
-
-
-// Apertura: deja ver el baile y los brillos antes de mostrar la invitación.
-const welcomeScreen = document.querySelector("#welcomeScreen");
-const welcomeEnter = document.querySelector("#welcomeEnter");
-if(welcomeScreen){
-  const closeWelcome = ()=>{
-    welcomeScreen.classList.add("is-closing");
-    document.body.classList.remove("welcome-open");
-    setTimeout(()=>welcomeScreen.remove(),950);
-  };
-  document.body.classList.add("welcome-open");
-  welcomeEnter?.addEventListener("click", closeWelcome);
-  window.setTimeout(closeWelcome, 4200);
-}

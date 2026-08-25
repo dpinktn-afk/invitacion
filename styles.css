@@ -265,41 +265,6 @@ h1{font-size:clamp(74px,9vw,136px);letter-spacing:-.055em}.date{color:var(--terr
 
 
 /* ===== APERTURA ROMÁNTICA + AJUSTE DE INVITACIÓN ===== */
-.welcome-screen{
-  position:fixed;inset:0;z-index:1000;display:grid;place-items:center;
-  background:radial-gradient(circle at 50% 42%,#fffdf8 0%,#f8f0e1 48%,#eee1cc 100%);
-  overflow:hidden;transition:opacity .9s ease,visibility .9s ease;
-}
-.welcome-screen.is-closing{opacity:0;visibility:hidden;pointer-events:none}
-.welcome-content{position:relative;z-index:2;text-align:center;padding:28px 20px}
-.welcome-kicker{margin:0 0 5px;color:var(--terracotta);font-size:10px;letter-spacing:.32em;font-weight:700}
-.welcome-content h2{font:600 clamp(38px,6vw,66px)/.95 "Cormorant Garamond",serif;color:var(--navy);margin:2px 0 8px}
-.welcome-content h2 span{font-style:italic;color:var(--terracotta)}
-.welcome-date{font:500 18px "Cormorant Garamond",serif;letter-spacing:.3em;color:var(--terracotta);margin:0 0 18px}
-.dancing-couple{width:min(390px,78vw);margin:0 auto -2px;animation:coupleEntrance 1.4s cubic-bezier(.2,.75,.2,1) both}
-.dancing-couple svg{display:block;width:100%;height:auto;overflow:visible}
-.dancing-couple g{fill:none;stroke:var(--navy);stroke-width:3.1;stroke-linecap:round;stroke-linejoin:round}
-.dancing-couple .groom,.dancing-couple .bride{transform-box:fill-box;transform-origin:center bottom}
-.dancing-couple .groom{animation:groomDance 1.25s ease-in-out .25s infinite alternate}
-.dancing-couple .bride{animation:brideDance 1.25s ease-in-out .25s infinite alternate}
-.dancing-couple .joined-hands{stroke:var(--terracotta);stroke-width:3.5;animation:handSway 1.25s ease-in-out .25s infinite alternate}
-.dancing-couple .dress-detail{stroke:var(--marigold)}
-.dancing-couple .shoe{fill:var(--navy);stroke:none}
-.couple-glow{stroke:none;animation:glowPulse 1.8s ease-in-out infinite}
-@keyframes coupleEntrance{from{opacity:0;transform:translateY(35px) scale(.9)}to{opacity:1;transform:none}}
-@keyframes groomDance{from{transform:rotate(-2deg) translateY(0)}to{transform:rotate(2.5deg) translateY(-4px)}}
-@keyframes brideDance{from{transform:rotate(2deg) translateY(-1px)}to{transform:rotate(-3deg) translateY(-5px)}}
-@keyframes handSway{from{transform:rotate(-2deg)}to{transform:rotate(3deg)}}
-@keyframes glowPulse{50%{opacity:.45;transform:scale(1.06)}}
-.welcome-enter{border:0;border-radius:999px;background:var(--navy);color:#fff;padding:13px 24px;min-width:205px;cursor:pointer;box-shadow:0 14px 32px rgba(38,59,55,.2);font-size:12px;letter-spacing:.08em;transition:transform .25s ease,box-shadow .25s ease}
-.welcome-enter:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(38,59,55,.28)}
-.welcome-enter span{color:#e7bd5a;margin-left:5px}
-.welcome-hint{margin:12px 0 0;color:var(--muted);font:italic 14px "Cormorant Garamond",serif}
-.welcome-sparkles{position:absolute;inset:0;pointer-events:none}
-.welcome-sparkles i{position:absolute;color:var(--marigold);font-style:normal;text-shadow:0 0 15px rgba(255,223,130,.95);opacity:0;animation:welcomeTwinkle 2.8s ease-in-out infinite}
-.welcome-sparkles i:nth-child(1){left:14%;top:18%;font-size:23px;animation-delay:.2s}.welcome-sparkles i:nth-child(2){left:28%;top:31%;font-size:15px;animation-delay:1s}.welcome-sparkles i:nth-child(3){left:10%;bottom:28%;font-size:20px;animation-delay:1.7s}.welcome-sparkles i:nth-child(4){right:15%;top:17%;font-size:21px;animation-delay:.8s}.welcome-sparkles i:nth-child(5){right:27%;top:35%;font-size:14px;animation-delay:1.5s}.welcome-sparkles i:nth-child(6){right:11%;bottom:25%;font-size:22px;animation-delay:2.1s}.welcome-sparkles i:nth-child(7){left:43%;top:10%;font-size:13px;animation-delay:1.2s}.welcome-sparkles i:nth-child(8){right:42%;bottom:13%;font-size:12px;animation-delay:.5s}
-@keyframes welcomeTwinkle{0%,100%{opacity:0;transform:scale(.35) rotate(0)}35%{opacity:1;transform:scale(1.2) rotate(18deg)}65%{opacity:.35;transform:scale(.75) rotate(45deg)}}
-
 /* La invitación es vertical 3:4: no usar cover porque recorta el diseño. */
 .art-frame.invitation-stage{width:min(100%,360px);max-width:360px;max-height:none;overflow:visible;transform:none}
 .art-frame.invitation-stage .invitation-card{width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain;object-position:center}
@@ -317,6 +282,9 @@ h1{font-size:clamp(74px,9vw,136px);letter-spacing:-.055em}.date{color:var(--terr
   .welcome-content{padding:20px 16px}.dancing-couple{width:min(330px,84vw)}
 }
 @media(prefers-reduced-motion:reduce){
-  .welcome-screen,.welcome-screen.is-closing{transition:none}
-  .dancing-couple,.dancing-couple .groom,.dancing-couple .bride,.dancing-couple .joined-hands,.couple-glow,.welcome-sparkles i{animation:none!important}
 }
+
+/* Entrada directa: destellos sutiles al cargar la invitación, sin pantalla de bienvenida. */
+body::after{content:"✦   ✧      ·       ✦      ·      ✧   ✦";position:fixed;inset:0;z-index:40;pointer-events:none;display:flex;align-items:center;justify-content:center;word-spacing:2.4rem;color:rgba(216,167,53,.8);font-size:clamp(12px,2vw,22px);text-shadow:0 0 14px rgba(255,220,120,.95);opacity:0;animation:pageSparkleSweep 1.8s ease-out .05s both;}
+@keyframes pageSparkleSweep{0%{opacity:0;transform:scale(.82)}25%{opacity:.95}65%{opacity:.35;transform:scale(1.04)}100%{opacity:0;transform:scale(1.12)}}
+@media(prefers-reduced-motion:reduce){body::after{animation:none;display:none}}
