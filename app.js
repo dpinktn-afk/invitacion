@@ -1,6 +1,7 @@
 const WEDDING_DATE = new Date("2027-01-09T17:00:00-06:00");
 
 const $ = (s) => document.querySelector(s);
+
 function tick(){
   const now = new Date(), diff = Math.max(0, WEDDING_DATE-now);
   const d=Math.floor(diff/86400000), h=Math.floor(diff/3600000)%24, m=Math.floor(diff/60000)%60, s=Math.floor(diff/1000)%60;
@@ -48,6 +49,28 @@ async function renderGuests(pin) {
 }
 
 let adminPin = '';
+
+const rsvpModal = $("#rsvpModal");
+const openRsvp = () => {
+  rsvpModal.classList.remove("hidden");
+  rsvpModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  rsvpModal.querySelector("input")?.focus();
+};
+const closeRsvp = () => {
+  rsvpModal.classList.add("hidden");
+  rsvpModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+};
+document.querySelectorAll("[data-open-rsvp]").forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    openRsvp();
+  });
+});
+$("#rsvpClose").addEventListener("click", closeRsvp);
+rsvpModal.addEventListener("click", e => { if(e.target === rsvpModal) closeRsvp(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && !rsvpModal.classList.contains("hidden")) closeRsvp(); });
 
 $("#rsvpForm").addEventListener("submit", async e => {
   e.preventDefault();
@@ -115,7 +138,7 @@ $("#clearData").onclick=async()=>{
 
 function escapeHtml(s){return String(s ?? '').replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 
-const DRIVE_FOLDER_URL="https://drive.google.com/";
+const DRIVE_FOLDER_URL="https://drive.google.com/drive/folders/1hJ7FSytunVJSdfxARi-APj75VwqlHfYe?usp=sharing";
 $("#driveButton").href=DRIVE_FOLDER_URL;
 
 const revealObserver = new IntersectionObserver((entries)=>{

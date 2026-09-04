@@ -1,0 +1,317 @@
+/* =========================================================
+   PORTADA — estilo invitación de sobre azul
+   Inspirado en la referencia: papel marfil + flores acuarela
+   azul + sobre azul grisáceo + sello dorado.
+   ========================================================= */
+.welcome-screen{
+  position:fixed; inset:0; z-index:200;
+  display:grid; place-items:center;
+  padding:18px;
+  background:#e7e1d3;
+  transition:opacity .7s ease, visibility .7s ease;
+}
+.welcome-screen:before{
+  content:"";
+  position:absolute;inset:-20%;pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 26%,rgba(69,101,77,.16),transparent 20%),
+    radial-gradient(circle at 82% 68%,rgba(190,105,76,.14),transparent 24%),
+    radial-gradient(circle at 50% 50%,rgba(255,250,235,.62),transparent 42%);
+  animation:welcomeLight 12s ease-in-out infinite alternate;
+}
+.welcome-screen.is-opening{opacity:0;visibility:hidden;transition-delay:.55s}
+
+/* Tarjeta vertical, como la referencia */
+.welcome-card{
+  position:relative;
+  width:min(88vw,430px);
+  height:min(92vh,765px);
+  max-height:calc(100vh - 24px);
+  min-height:0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  background:
+    radial-gradient(circle at 20% 15%,rgba(255,255,255,.9),transparent 28%),
+    radial-gradient(circle at 82% 82%,rgba(203,123,91,.12),transparent 30%),
+    #f5f0e5;
+  border:1px solid rgba(41,70,61,.18);
+  box-shadow:0 28px 70px rgba(43,59,49,.22),0 0 0 1px rgba(255,255,255,.3) inset;
+  animation:cardArrive .9s cubic-bezier(.2,.75,.2,1) both;
+}
+
+/* textura muy ligera */
+.welcome-card:after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:radial-gradient(rgba(38,59,55,.055) .6px,transparent .6px);
+  background-size:7px 7px; opacity:.35;
+}
+
+/* Flores/coronas decorativas en las esquinas */
+.welcome-card:before{
+  content:""; position:absolute; z-index:1;
+  width:205px; height:205px; left:-32px; top:-28px;
+  opacity:.72;
+  background:
+    radial-gradient(ellipse at 35% 33%,#6f8b78 0 10%,transparent 11%),
+    radial-gradient(ellipse at 52% 23%,#b9c6a9 0 8%,transparent 9%),
+    radial-gradient(ellipse at 19% 55%,#879d83 0 7%,transparent 8%),
+    radial-gradient(ellipse at 62% 45%,#d0a083 0 7%,transparent 8%),
+    linear-gradient(140deg,transparent 45%,rgba(67,103,82,.5) 46% 47%,transparent 48%),
+    linear-gradient(32deg,transparent 55%,rgba(199,116,82,.38) 56% 57%,transparent 58%);
+  filter:blur(.15px);
+  transform:rotate(-8deg);
+}
+
+.welcome-card .welcome-flower{position:absolute;z-index:2;pointer-events:none;color:#73978e;opacity:.62;font-size:30px;line-height:1}
+.welcome-card .flower-top{left:12px;top:104px;transform:rotate(-22deg)}
+.welcome-card .flower-bottom{right:10px;bottom:12px;transform:rotate(18deg) scale(1.2)}
+
+.welcome-kicker{
+  position:relative; z-index:3;
+  margin-top:108px;
+  color:#27322f;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:12px;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+}
+
+.welcome-names{
+  position:relative; z-index:3;
+  margin-top:14px;
+  text-align:center;
+  color:#234238;
+}
+.welcome-names strong{
+  display:inline-block;
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(30px,7vw,40px);
+  font-weight:500;
+  font-style:italic;
+  line-height:.95;
+}
+.welcome-names span{
+  display:inline-block;
+  margin:0 8px;
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:27px;
+  font-style:italic;
+}
+
+.welcome-date{
+  position:relative; z-index:3;
+  margin-top:18px;
+  color:#4d5148;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:10px;
+  letter-spacing:.22em;
+}
+
+/* Sobre exactamente en el espíritu de la referencia */
+.envelope{
+  position:relative; z-index:4;
+  width:min(72vw,300px);
+  aspect-ratio:1.58/1;
+  margin-top:24px;
+  padding:0;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  filter:drop-shadow(0 14px 15px rgba(30,48,61,.22));
+  transition:transform .35s ease,filter .35s ease;
+  animation:envelopeFloat 4.8s ease-in-out infinite;
+}
+.envelope:hover{transform:translateY(-8px) rotate(-1deg);filter:drop-shadow(0 24px 22px rgba(30,48,61,.3))}
+.envelope:focus-visible{outline:2px solid #b9974b;outline-offset:8px}
+
+.envelope-body{
+  position:absolute; inset:0;
+  display:block;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 18% 22%,rgba(218,178,102,.34) 0 1px,transparent 2px),
+    radial-gradient(circle at 82% 70%,rgba(235,186,117,.3) 0 1px,transparent 2px),
+    linear-gradient(150deg,rgba(255,255,255,.2),transparent 35%),
+    linear-gradient(25deg,#31574c,#456d5d 52%,#294b42);
+  background-size:auto,auto,auto,auto;
+  border:1px solid rgba(35,66,56,.45);
+  border-radius:1px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 0 22px rgba(218,178,102,.12);
+}
+.envelope:before{
+  content:"";
+  position:absolute;z-index:1;inset:-9px;pointer-events:none;
+  border:1px solid rgba(197,139,83,.36);
+  clip-path:polygon(7% 0,93% 0,100% 7%,100% 93%,93% 100%,7% 100%,0 93%,0 7%);
+  -webkit-clip-path:polygon(7% 0,93% 0,100% 7%,100% 93%,93% 100%,7% 100%,0 93%,0 7%);
+  filter:drop-shadow(0 0 7px rgba(218,178,102,.25));
+  animation:frameGlow 3.8s ease-in-out infinite;
+}
+
+/* Pliegues inferiores del sobre */
+.envelope-body:before,
+.envelope-body:after{
+  content:"";
+  position:absolute;
+  bottom:-1px;
+  width:73%; height:78%;
+  background:rgba(21,54,45,.2);
+  border-top:1px solid rgba(255,255,255,.16);
+}
+.envelope-body:before{left:-34%;transform:skewX(31deg);transform-origin:bottom right}
+.envelope-body:after{right:-34%;transform:skewX(-31deg);transform-origin:bottom left}
+
+/* Hoja blanca que asoma dentro del sobre */
+.envelope-paper{
+  position:absolute; z-index:2;
+  left:7%; right:7%; top:6%; height:82%;
+  display:block;
+  background:#fbf7ed;
+  border:1px solid rgba(59,78,64,.16);
+  box-shadow:0 4px 13px rgba(35,55,42,.16);
+  transform:translateY(0);
+  transition:transform .8s cubic-bezier(.2,.75,.2,1);
+}
+.envelope-paper:before{
+  content:"V  &  L";
+  position:absolute; left:50%; top:37%;
+  transform:translate(-50%,-50%);
+  color:#31564a;
+  font:italic 21px "Cormorant Garamond",serif;
+}
+.envelope-paper .envelope-open-label{display:none}
+
+/* Solapa triangular verde, en armonía con la invitación */
+.envelope-flap{
+  position:absolute; z-index:4;
+  left:0; right:0; top:0; height:72%;
+  display:block;
+  background:linear-gradient(165deg,#587a68,#416554 65%,#315547);
+  border:1px solid rgba(35,66,56,.4);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  -webkit-clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top;
+  transition:transform .8s cubic-bezier(.2,.75,.2,1);
+  backface-visibility:hidden;
+}
+.envelope-flap:after{
+  content:"";position:absolute;left:50%;top:5%;width:1px;height:89%;
+  background:rgba(255,255,255,.12);transform:rotate(0deg);opacity:.7;
+}
+
+/* Destellos y detalles cálidos, como la iluminación de un patio yucateco */
+.envelope-flap:before{
+  content:"";
+  position:absolute;inset:18% 22%;
+  border:1px solid rgba(235,198,132,.28);
+  clip-path:polygon(50% 0,57% 42%,100% 50%,57% 58%,50% 100%,43% 58%,0 50%,43% 42%);
+  -webkit-clip-path:polygon(50% 0,57% 42%,100% 50%,57% 58%,50% 100%,43% 58%,0 50%,43% 42%);
+  opacity:.8;
+}
+.envelope-sparkle{
+  position:absolute;z-index:8;pointer-events:none;
+  color:#efd39a;text-shadow:0 0 8px rgba(239,211,154,.72);
+  font-family:Georgia,serif;line-height:1;
+  animation:sparkleGlow 2.8s ease-in-out infinite;
+}
+.sparkle-one{left:12%;top:27%;font-size:15px;animation-delay:-.4s}
+.sparkle-two{right:12%;top:43%;font-size:11px;animation-delay:-1.5s}
+.sparkle-three{right:20%;bottom:13%;font-size:16px;animation-delay:-2.1s}
+@keyframes sparkleGlow{0%,100%{opacity:.42;transform:scale(.86) rotate(0)}50%{opacity:1;transform:scale(1.18) rotate(12deg)}}
+
+/* Hilo punteado que baja desde el sello */
+.envelope:after{
+  content:"";
+  position:absolute; z-index:6;
+  width:62px; height:48px;
+  left:calc(50% - 74px); top:57%;
+  border-left:1.5px dashed rgba(214,179,84,.85);
+  border-bottom:1.5px dashed rgba(214,179,84,.85);
+  border-radius:0 0 0 28px;
+  transform:rotate(-20deg);
+  pointer-events:none;
+}
+
+/* Sello de cera dorado */
+.envelope-seal{
+  position:absolute; z-index:7;
+  left:50%; top:53%;
+  transform:translate(-50%,-50%);
+  width:51px; height:51px;
+  display:grid; place-items:center;
+  border-radius:50%;
+  color:#fff7e3;
+  background:
+    radial-gradient(circle at 35% 28%,#e5b17d 0 12%,#c97858 32%,#a95743 72%,#874332 100%);
+  border:2px solid rgba(255,229,155,.65);
+  box-shadow:0 4px 9px rgba(76,53,14,.34),inset 0 1px 2px rgba(255,255,255,.55);
+  font:700 17px "Cormorant Garamond",serif;
+  transition:transform .5s ease,opacity .3s ease;
+  animation:sealGlow 3.2s ease-in-out infinite;
+}
+.envelope-seal:before{
+  content:"";position:absolute;inset:7px;border:1px solid rgba(255,241,184,.48);border-radius:50%;
+}
+.envelope-seal span{font-style:italic}
+
+.welcome-hint{
+  position:relative; z-index:4;
+  margin:17px 0 0;
+  text-align:center;
+  color:#39413e;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:9px;
+  line-height:1.5;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  animation:hintPulse 2.2s ease-in-out infinite;
+}
+
+/* Apertura */
+.welcome-screen.is-opening .envelope{animation:envelopeOpen .85s ease both}
+.welcome-screen.is-opening .envelope-flap{transform:rotateX(180deg)}
+.welcome-screen.is-opening .envelope-paper{transform:translateY(-30%);transition-delay:.08s}
+.welcome-screen.is-opening .envelope-seal{opacity:0;transform:translate(-50%,-50%) scale(.65)}
+.welcome-screen.is-opening .welcome-card{transform:scale(1.015);transition:transform .8s ease}
+
+@keyframes envelopeOpen{
+  0%{transform:translateY(0)}
+  45%{transform:translateY(-7px) scale(1.025)}
+  100%{transform:translateY(-7px) scale(1.025)}
+}
+@keyframes hintPulse{50%{opacity:.45;transform:translateY(2px)}}
+@keyframes envelopeFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(.7deg)}}
+@keyframes frameGlow{0%,100%{opacity:.42;transform:scale(.99)}50%{opacity:.9;transform:scale(1.015)}}
+@keyframes sealGlow{0%,100%{box-shadow:0 4px 9px rgba(76,53,14,.34),inset 0 1px 2px rgba(255,255,255,.55)}50%{box-shadow:0 5px 18px rgba(194,105,76,.5),0 0 20px rgba(229,177,125,.3),inset 0 1px 2px rgba(255,255,255,.65)}}
+@keyframes welcomeLight{0%{transform:scale(1) rotate(0);opacity:.8}100%{transform:scale(1.08) rotate(3deg);opacity:1}}
+@keyframes cardArrive{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+
+@media(max-width:500px){
+  .welcome-card{width:min(92vw,390px);height:min(92vh,720px);max-height:calc(100vh - 20px)}
+  .welcome-kicker{margin-top:94px;font-size:11px}
+  .welcome-names strong{font-size:31px}
+  .welcome-names span{font-size:23px;margin:0 4px}
+  .envelope{width:min(73vw,285px);margin-top:21px}
+}
+@media(max-height:680px){
+  .welcome-card{height:96vh;max-height:calc(100vh - 12px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .welcome-kicker{margin-top:58px}
+  .welcome-names{margin-top:8px}
+  .welcome-date{margin-top:10px}
+  .envelope{margin-top:14px}
+  .welcome-hint{margin-top:9px}
+}
+@supports (height:100dvh){
+  .welcome-card{max-height:calc(100dvh - 24px)}
+  @media(max-width:500px){.welcome-card{max-height:calc(100dvh - 20px)}}
+  @media(max-height:680px){.welcome-card{max-height:calc(100dvh - 12px)}}
+}
+@media(prefers-reduced-motion:reduce){
+  .welcome-hint{animation:none}
+  .envelope-sparkle{animation:none}
+  .envelope,.envelope:before,.envelope-seal,.welcome-screen:before,.welcome-card{animation:none}
+  .welcome-screen.is-opening .envelope{animation:none}
+  .envelope-flap,.envelope-paper{transition-duration:.01ms}
+}
