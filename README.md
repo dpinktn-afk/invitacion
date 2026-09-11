@@ -19,14 +19,17 @@ No subas el archivo `.env` ni claves secretas a GitHub.
 
 ### 2. Subir el proyecto a Vercel
 
-1. Descomprime este ZIP.
+1. Descomprime este ZIP. **La carpeta que subas debe contener directamente** `index.html`, `api/` y `vercel.json`; no selecciones una carpeta padre vacía ni subas el ZIP dentro de otra carpeta.
 2. Entra a [Vercel](https://vercel.com/new).
 3. Elige **Add New → Project** y conecta el repositorio de GitHub, o usa **Import Third-Party Git Repository**.
-4. Si Vercel pregunta por el framework, selecciona **Other**.
+4. Si Vercel pregunta por el framework, selecciona **Other** o **Other (Vercel)**.
 5. Deja el **Root Directory** en la carpeta que contiene `index.html`, `api` y `vercel.json`.
-6. Pulsa **Deploy**.
+6. En **Build and Output Settings**, deja el comando de build vacío y el directorio de salida vacío.
+7. Pulsa **Deploy**.
 
-Este proyecto es HTML/CSS/JS puro. No necesita `npm install` ni comando de build.
+Este proyecto es HTML/CSS/JS puro. No necesita `npm install` ni comando de build. Vercel detecta automáticamente la función `api/rsvp.js`.
+
+Si lo conectas mediante GitHub, sube **el contenido de esta carpeta** al repositorio, no la carpeta contenedora ni el archivo ZIP. Si el repositorio contiene otros proyectos, configura **Root Directory** con la carpeta exacta donde están estos archivos.
 
 ### 3. Agregar las variables de entorno
 
