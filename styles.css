@@ -364,3 +364,84 @@ body::after{content:"✦   ✧      ·       ✦      ·      ✧   ✦";positio
 @media(max-width:900px){
   .nav nav a[href="#vestimenta"]{display:none}
 }
+
+
+/* ===== AJUSTE FINAL HERO: invitación completa, sin recortes ni deformaciones ===== */
+.hero{
+  height:auto !important;
+  min-height:calc(100vh - 76px);
+  overflow:visible !important;
+}
+.hero-art{
+  width:100%;
+  max-width:430px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform:none !important;
+}
+.art-frame.invitation-stage{
+  position:relative;
+  width:100%;
+  max-width:390px;
+  height:auto;
+  max-height:none !important;
+  margin:0 auto;
+  padding:8px;
+  overflow:visible !important;
+  transform:none !important;
+}
+.art-frame.invitation-stage::before{display:none}
+.art-frame.invitation-stage .invitation-card{
+  display:block;
+  width:100% !important;
+  height:auto !important;
+  max-width:100%;
+  max-height:none !important;
+  aspect-ratio:auto !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  transform:none;
+  animation:none !important;
+}
+.invitation-sparkles{display:none}
+@media (min-width:801px){
+  .hero{
+    grid-template-columns:minmax(0,1fr) minmax(300px,390px);
+    gap:5vw;
+    padding-top:55px;
+    padding-bottom:55px;
+  }
+}
+@media (max-width:800px){
+  .hero{
+    min-height:auto;
+    padding:30px 18px 55px;
+    gap:35px;
+  }
+  .hero-art{
+    order:-1;
+    max-width:360px;
+  }
+  .art-frame.invitation-stage{
+    width:100%;
+    max-width:360px;
+    padding:6px;
+  }
+}
+
+/* La paleta debe verse completa y conservar su proporción */
+#vestimenta{scroll-margin-top:90px}
+.palette-frame{
+  width:100%;
+  max-width:620px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.palette-frame img{
+  width:100%;
+  height:auto;
+  max-height:none;
+  object-fit:contain;
+}
