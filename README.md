@@ -1,98 +1,72 @@
-# Vianey & Luis — Sitio de boda
+# Invitación Vianey & Luis
 
-Sitio web moderno en tonos crema + azul marino, inspirado en la invitación.
+Sitio estático de la boda con confirmaciones guardadas en Supabase mediante una función serverless de Vercel.
 
-## Incluye
-- Invitación digital y contador regresivo.
-- Datos de Casa Maya, Mérida, con botón de ubicación.
-- Registro/RSVP.
-- Panel privado de invitados protegido con PIN.
-- Conteo de confirmados, pendientes y no asistentes.
-- Sección de álbum/fotos preparada para Google Drive.
-- Diseño responsive para celular.
+## Importante: Vercel no almacena la base de datos
 
-## Registro real con Supabase + Vercel
+La base de datos se crea en **Supabase**. Vercel aloja la página y ejecuta `/api/rsvp.js`, que conecta con Supabase de forma segura.
 
-Esta versión **ya no usa `localStorage` para las confirmaciones**. El formulario envía los datos a `/api/rsvp`, una función server-side de Vercel, y esa función los guarda en Supabase.
+## Configuración paso a paso
 
 ### 1. Crear la tabla en Supabase
 
-Abre el proyecto de Supabase y entra a **SQL Editor**. Ejecuta el archivo `supabase-schema.sql` incluido en este ZIP.
+1. Entra a [Supabase](https://supabase.com/dashboard) y crea o abre un proyecto.
+2. Abre **SQL Editor → New query**.
+3. Copia todo el contenido de `supabase-schema.sql`.
+4. Pulsa **Run** y confirma que aparezca la tabla `public.invitados` en **Table Editor**.
 
-La tabla se llama `invitados` y guarda:
-- `nombre`
-- `contacto`
-- `asistencia` (`confirmed`, `pending` o `declined`)
-- `personas`
-- `mensaje`
-- `created_at`
+No subas el archivo `.env` ni claves secretas a GitHub.
 
-### 2. Variables de entorno en Vercel
+### 2. Subir el proyecto a Vercel
 
-En el proyecto de Vercel agrega:
+1. Descomprime este ZIP.
+2. Entra a [Vercel](https://vercel.com/new).
+3. Elige **Add New → Project** y conecta el repositorio de GitHub, o usa **Import Third-Party Git Repository**.
+4. Si Vercel pregunta por el framework, selecciona **Other**.
+5. Deja el **Root Directory** en la carpeta que contiene `index.html`, `api` y `vercel.json`.
+6. Pulsa **Deploy**.
 
-- `SUPABASE_URL` = URL de tu proyecto de Supabase
-- `SUPABASE_SERVICE_ROLE_KEY` = Service Role Key de Supabase
-- `ADMIN_PIN` = un PIN privado que tú elijas
+Este proyecto es HTML/CSS/JS puro. No necesita `npm install` ni comando de build.
 
-**No publiques la Service Role Key en `app.js`, HTML ni en GitHub.** La API de Vercel es la única parte que la utiliza.
+### 3. Agregar las variables de entorno
 
-### 3. Panel privado
+En Vercel abre **Project → Settings → Environment Variables** y crea estas tres variables:
 
-El botón 🔒 de la invitación pide el `ADMIN_PIN`. Después consulta los registros reales de Supabase y muestra:
-- confirmados
-- pendientes
-- no asistentes
-- total de personas confirmadas
-- lista de invitados
+| Nombre | Valor |
+|---|---|
+| `SUPABASE_URL` | En Supabase: **Project Settings → Data API → URL**; normalmente termina en `.supabase.co` |
+| `SUPABASE_SERVICE_ROLE_KEY` | En Supabase: **Project Settings → API Keys → Secret / service_role** |
+| `ADMIN_PIN` | Un PIN privado elegido por ti |
 
-El botón **Borrar registros** elimina los registros de la tabla y requiere el mismo PIN.
+Selecciona al menos **Production** y **Preview** si usarás ambos entornos. La `SUPABASE_SERVICE_ROLE_KEY` solamente debe existir en Vercel; nunca la pongas en `app.js`, HTML o GitHub.
 
-### 4. Flujo completo
+Después de guardar las variables, ve a **Deployments → Redeploy**. Las variables nuevas no corrigen un deployment anterior hasta volver a desplegarlo.
 
-`Invitado → formulario → Vercel /api/rsvp → Supabase → panel privado`
+## Prueba rápida
 
-Por eso ahora una confirmación enviada desde un celular estará disponible para ti desde cualquier dispositivo donde publiques la invitación.
+Abre la URL pública de Vercel y envía una confirmación. Luego revisa **Supabase → Table Editor → invitados**. Para abrir el panel privado, usa el botón de candado de la invitación y escribe el mismo `ADMIN_PIN`.
 
-### Seguridad
+También puedes comprobar la función desde el navegador:
 
-La tabla tiene Row Level Security (RLS) activado y no se crean políticas públicas. Las operaciones se realizan desde la función server-side de Vercel usando la Service Role Key.
+- `GET https://TU-DOMINIO.vercel.app/api/rsvp` sin PIN debe responder `401 No autorizado.` Esto confirma que la función está publicada.
+- Si responde `500 Faltan variables de entorno...`, falta una de las tres variables o aún no se ha hecho Redeploy.
 
-El archivo `.env.example` muestra los nombres de las variables que debes configurar. No contiene claves reales.
+## Errores frecuentes
 
-## Google Drive
-El botón de fotos apunta inicialmente a `https://drive.google.com/`.
-Cámbialo en `app.js`:
-`const DRIVE_FOLDER_URL="TU_URL_DE_CARPETA";`
+**`404 /api/rsvp`**: el Root Directory de Vercel apunta a una carpeta equivocada. Debe apuntar a la carpeta donde están simultáneamente `index.html` y `api/rsvp.js`.
 
-Si quieres subida directa desde la página hacia Drive, hay que configurar autenticación OAuth y Google Drive API. Google documenta la carga de archivos mediante la API y los permisos `drive.file`. No conviene poner credenciales privadas directamente en el HTML.
+**`500 Faltan variables de entorno`**: revisa los nombres exactamente, sin espacios, y haz Redeploy después de guardarlas.
 
-## Publicar
-Puedes subir esta carpeta a Netlify, Vercel o GitHub Pages. Si después quieres dominio propio, por ejemplo `vianeyyluis.com`, se puede conectar al hosting.
+**Error de Supabase `relation invitados does not exist`**: no se ejecutó `supabase-schema.sql` en el SQL Editor del proyecto correcto.
 
-## Ubicación
-Casa Maya:
-C. 62 492, Centro, 97000 Mérida, Yucatán.
-La URL del botón de mapa ya está configurada con Google Maps.
+**Error de Supabase `Invalid API key`**: copia de nuevo la URL y la clave secret/service_role del mismo proyecto de Supabase. No uses la contraseña de la base de datos.
 
+**La página carga pero el formulario falla**: abre la consola de Vercel en **Deployments → Functions → `api/rsvp` → Logs** para ver el detalle real.
 
-## Vercel + Supabase (recomendado para la versión real)
+## Archivos clave
 
-1. Sube este proyecto a Vercel.
-2. Crea un proyecto gratuito en Supabase.
-3. Crea una tabla `invitados` con:
-   - `id`
-   - `nombre`
-   - `contacto`
-   - `asistencia`
-   - `personas`
-   - `mensaje`
-   - `created_at`
-4. Agrega las variables de entorno de Supabase en Vercel.
-5. Cambia el formulario de `app.js` para insertar/consultar los registros de Supabase.
-6. El panel privado puede usar autenticación de Supabase para que solamente Vianey y Luis puedan entrar.
-
-No pongas una `service_role` key de Supabase dentro del JavaScript público. Para el navegador se debe usar la clave pública/anónima con Row Level Security bien configurado, o un endpoint server-side de Vercel.
-
-## Mesa de regalos
-Incluye datos de Santander para regalos opcionales y botón para copiar los datos bancarios.
+- `index.html`, `styles.css`, `app.js`: sitio público.
+- `api/rsvp.js`: API server-side para insertar, consultar y borrar registros.
+- `supabase-schema.sql`: estructura de la tabla.
+- `vercel.json`: configuración explícita de la función Node.js.
+- `.env.example`: nombres de variables; no contiene valores reales.
