@@ -289,3 +289,78 @@ h1{font-size:clamp(74px,9vw,136px);letter-spacing:-.055em}.date{color:var(--terr
 body::after{content:"✦   ✧      ·       ✦      ·      ✧   ✦";position:fixed;inset:0;z-index:40;pointer-events:none;display:flex;align-items:center;justify-content:center;word-spacing:2.4rem;color:rgba(216,167,53,.8);font-size:clamp(12px,2vw,22px);text-shadow:0 0 14px rgba(255,220,120,.95);opacity:0;animation:pageSparkleSweep 1.8s ease-out .05s both;}
 @keyframes pageSparkleSweep{0%{opacity:0;transform:scale(.82)}25%{opacity:.95}65%{opacity:.35;transform:scale(1.04)}100%{opacity:0;transform:scale(1.12)}}
 @media(prefers-reduced-motion:reduce){body::after{animation:none;display:none}}
+
+
+/* ===== CÓDIGO DE VESTIMENTA / PALETA DE COLORES ===== */
+.dress-code{
+  position:relative;
+  max-width:1240px;
+  overflow:hidden;
+}
+.dress-code:before{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  right:-170px;
+  top:80px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(182,92,67,.11),transparent 68%);
+  pointer-events:none;
+}
+.dress-code>*{position:relative}
+.dress-code-card{
+  display:grid;
+  grid-template-columns:minmax(280px,.72fr) minmax(360px,1.28fr);
+  align-items:center;
+  gap:42px;
+  padding:34px;
+  margin-top:34px;
+  background:rgba(255,253,248,.86);
+  border:1px solid rgba(182,92,67,.18);
+  box-shadow:0 25px 70px rgba(68,45,35,.08);
+}
+.dress-code-copy{padding:8px 8px 8px 4px}
+.dress-code-label{
+  display:inline-block;
+  color:var(--terracotta);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.18em;
+  margin-bottom:12px;
+}
+.dress-code-copy h3{font-family:"Cormorant Garamond",serif;font-size:38px;margin:0 0 12px}
+.dress-code-copy p{max-width:430px;color:var(--muted);line-height:1.75}
+.dress-note{
+  margin-top:24px;
+  padding:16px 18px;
+  border-left:2px solid var(--marigold);
+  background:rgba(216,167,53,.07);
+  color:var(--ink);
+  font-size:13px;
+  line-height:1.6;
+}
+.dress-note span{color:var(--terracotta);margin-right:7px}
+.palette-frame{
+  overflow:hidden;
+  background:#f5eee5;
+  border:9px solid rgba(255,255,255,.9);
+  box-shadow:0 20px 55px rgba(38,59,55,.12);
+  transform:rotate(.5deg);
+}
+.palette-frame img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:720px;
+  object-fit:contain;
+}
+@media(max-width:800px){
+  .dress-code-card{grid-template-columns:1fr;padding:18px;gap:25px;margin-top:24px}
+  .dress-code-copy h3{font-size:32px}
+  .palette-frame{border-width:6px;transform:none}
+  .dress-code:before{width:280px;height:280px;right:-150px}
+}
+@media(max-width:900px){
+  .nav nav a[href="#vestimenta"]{display:none}
+}
