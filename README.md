@@ -73,3 +73,16 @@ También puedes comprobar la función desde el navegador:
 - `supabase-schema.sql`: estructura de la tabla.
 - `vercel.json`: configuración explícita de la función Node.js.
 - `.env.example`: nombres de variables; no contiene valores reales.
+
+
+## Diagnóstico mejorado
+
+Esta versión muestra en el navegador el detalle que devuelve Supabase cuando el guardado falla, por ejemplo `Invalid API key`, `relation invitados does not exist` o un error de columnas. Esto facilita identificar el problema sin exponer la `service_role` al navegador.
+
+Si aparece `Faltan variables de entorno de Supabase/Vercel`, revisa las tres variables y haz **Redeploy**.
+
+Si aparece `relation "public.invitados" does not exist`, ejecuta `supabase-schema.sql` en el SQL Editor del mismo proyecto de Supabase.
+
+Si aparece `Invalid API key`, vuelve a copiar `SUPABASE_URL` y la clave **Secret / service_role** del mismo proyecto.
+
+Si aparece un error de permisos/RLS, confirma que la API está usando la clave server-side y que no la pusiste en `app.js`.

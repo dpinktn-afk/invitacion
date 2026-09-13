@@ -15,7 +15,11 @@ async function apiRequest(url, options = {}) {
     headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }
   });
   const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error || 'No se pudo completar la operación.');
+  if (!response.ok) {
+    const detail = typeof data.details === 'string' ? data.details : data.details?.message || data.details?.error || data.details?.hint || '';
+    const status = data.supabaseStatus ? ` (Supabase ${data.supabaseStatus})` : '';
+    throw new Error((data.error || 'No se pudo completar la operación.') + (detail ? `\n${detail}` : '') + status);
+  }
   return data;
 }
 
