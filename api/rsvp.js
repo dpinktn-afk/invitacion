@@ -1,4 +1,4 @@
-const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.invitacionVL_SUPABASE_URL;
+const SUPABASE_URL = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.invitacionVL_SUPABASE_URL || '').replace(/\/$/, '');
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY || process.env.invitacionVL_SUPABASE_SERVICE_ROLE_KEY || process.env.invitacionVL_SUPABASE_SECRET_KEY;
 const ADMIN_PIN = process.env.ADMIN_PIN;
 
@@ -29,7 +29,7 @@ async function supabaseFetch(path, options = {}) {
   let data = null;
   try { data = text ? JSON.parse(text) : null; } catch { data = text; }
   if (!response.ok) {
-    const error = new Error('Supabase request failed');
+    const error = new Error(data?.message || data?.error_description || data?.hint || 'Supabase request failed');
     error.status = response.status;
     error.details = data;
     throw error;
@@ -97,6 +97,10 @@ module.exports = async (req, res) => {
     return send(res, 405, { error: 'Método no permitido.' });
   } catch (error) {
     console.error(error);
-    return send(res, 500, { error: 'No se pudo completar la operación.', details: error.details || undefined });
+    return send(res, 500, {
+      error: 'No se pudo completar la operación.',
+      details: error.details || error.message || undefined,
+      supabaseStatus: error.status || undefined
+    });
   }
 };
