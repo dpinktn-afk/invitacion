@@ -1,5 +1,5 @@
-const SUPABASE_URL = process.env.SUPABASE_URL || process.env.invitacionVL_SUPABASE_URL;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.invitacionVL_SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.invitacionVL_SUPABASE_URL;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY || process.env.invitacionVL_SUPABASE_SERVICE_ROLE_KEY || process.env.invitacionVL_SUPABASE_SECRET_KEY;
 const ADMIN_PIN = process.env.ADMIN_PIN;
 
 function send(res, status, body) {
