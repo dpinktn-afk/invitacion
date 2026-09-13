@@ -8,14 +8,17 @@ const rawSupabaseUrl =
 
 const SUPABASE_URL = rawSupabaseUrl.replace(/\/$/, '');
 
-// Preferimos la Secret Key moderna de Supabase si existe; si no, usamos service_role.
+// Para PostgREST usamos preferentemente la service_role JWT.
+// La clave sb_secret_* moderna puede usarse como apikey, pero no siempre como Bearer JWT.
 // NUNCA expongas estas claves en el navegador ni uses NEXT_PUBLIC_ para ellas.
 const SUPABASE_SERVER_KEY =
-  process.env.invitacionVL_SUPABASE_SECRET_KEY ||
   process.env.invitacionVL_SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.SUPABASE_SECRET_KEY ||
   process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.invitacionVL_SUPABASE_SECRET_KEY ||
+  process.env.SUPABASE_SECRET_KEY ||
   '';
+
+const IS_JWT_KEY = SUPABASE_SERVER_KEY.startsWith('eyJ');
 
 const ADMIN_PIN = process.env.ADMIN_PIN || process.env.invitacionVL_ADMIN_PIN || '';
 
@@ -49,15 +52,35 @@ function checkConfig(res) {
 }
 
 async function supabaseFetch(path, options = {}) {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    ...options,
-    headers: {
-      apikey: SUPABASE_SERVER_KEY,
-      Authorization: `Bearer ${SUPABASE_SERVER_KEY}`,
-      'Content-Type': 'application/json',
-      ...(options.headers || {})
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+
+  const headers = {
+    apikey: SUPABASE_SERVER_KEY,
+    'Content-Type': 'application/json',
+    ...(options.headers || {})
+  };
+
+  // Authorization Bearer requiere una JWT (anon/service_role).
+  if (IS_JWT_KEY) headers.Authorization = `Bearer ${SUPABASE_SERVER_KEY}`;
+
+  let response;
+  try {
+    response = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      ...options,
+      headers,
+      signal: controller.signal
+    });
+  } catch (err) {
+    if (err?.name === 'AbortError') {
+      const timeoutError = new Error('Supabase tardó más de 8 segundos en responder.');
+      timeoutError.status = 504;
+      throw timeoutError;
     }
-  });
+    throw err;
+  } finally {
+    clearTimeout(timeout);
+  }
 
   const text = await response.text();
   let data = null;
@@ -83,10 +106,14 @@ module.exports = async (req, res) => {
     // Diagnóstico seguro: no devuelve ninguna clave.
     // Úsalo como /api/rsvp?health=1 para comprobar a qué proyecto apunta Vercel.
     if (req.method === 'GET' && req.query?.health === '1') {
+      const rows = await supabaseFetch('invitados?select=id&limit=1');
       return send(res, 200, {
         ok: true,
+        databaseReachable: true,
         projectRef: projectRefFromUrl(SUPABASE_URL),
-        table: 'public.invitados'
+        table: 'public.invitados',
+        keyType: IS_JWT_KEY ? 'jwt-service-role' : 'secret-key',
+        sampleRows: Array.isArray(rows) ? rows.length : 0
       });
     }
 
